@@ -1,0 +1,16 @@
+version: '2.2'
+services:
+  recommender:
+    build: .
+    image: recommender:dev
+    ports:
+      - 8084:8084
+    expose:
+      - "8084"
+    container_name: dojo-recommender
+    networks:
+      - rec
+
+networks:
+  rec:
+    driver: bridge
