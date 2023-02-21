@@ -34,6 +34,9 @@ class AllResponseSchema(BaseModel):
     causes: List[str]
     effects: List[str]
 
+@app.get("/healthcheck")
+def get_healthcheck():
+    return "OK"
 
 @app.post("/causal-recommender/causes", response_model=CausesResponseSchema)
 def get_causality_recommendation_causes(payload: RequestBody):
