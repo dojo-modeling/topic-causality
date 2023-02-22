@@ -22,7 +22,7 @@ class CausalRecommender:
 
         if device is None:
             if torch.cuda.is_available():
-                print("Cuda device 0 identified. Likely running on GPU.")
+                print("Cuda device identified. Likely running on GPU.")
             else:
                 print("No cuda device identified. Likely running on CPU.")
 
