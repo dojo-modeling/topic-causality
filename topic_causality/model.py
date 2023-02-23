@@ -21,6 +21,11 @@ class CausalRecommender:
         logging.set_verbosity_debug()
 
         if device is None:
+            if torch.cuda.is_available():
+                print("Cuda device identified. Likely running on GPU.")
+            else:
+                print("No cuda device identified. Likely running on CPU.")
+
             device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
         self.generator = pipeline('text-generation', model=model_name, device=device)
@@ -87,7 +92,6 @@ what are 3 {'causes' if is_cause else 'effects'} of {topic}?
 
 
 recommender_engine = CausalRecommender()
-
 
 """
 In case we wish to try the recommender as standalone, without the API.

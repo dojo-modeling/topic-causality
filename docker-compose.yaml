@@ -2,7 +2,7 @@ version: '2.2'
 services:
   recommender:
     build: .
-    image: recommender:dev
+    image: recommender:gpu
     ports:
       - 8084:8084
     expose:
@@ -10,6 +10,15 @@ services:
     container_name: dojo-recommender
     networks:
       - rec
+    volumes:
+      - ./big_models_data_cache:/recommender/big_models_data_cache
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
 networks:
   rec:

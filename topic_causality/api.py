@@ -34,6 +34,14 @@ class AllResponseSchema(BaseModel):
     causes: List[str]
     effects: List[str]
 
+@app.get("/healthcheck")
+def get_healthcheck():
+    return {
+        "status": "OK",
+        # Set to True for gpu instance,
+        # or load from torch lib from model.py if you're feeling up to it:
+        "gpu": False
+    }
 
 @app.post("/causal-recommender/causes", response_model=CausesResponseSchema)
 def get_causality_recommendation_causes(payload: RequestBody):

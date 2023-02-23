@@ -73,3 +73,5 @@ target/
 # Environments
 .env
 .venv*
+
+big_models_data_cache/
