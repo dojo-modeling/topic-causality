@@ -77,3 +77,15 @@ ENV TRANSFORMERS_CACHE="/recommender/big_models_data_cache"
 ```
 
 Which means that, by default, the host will contain this model cache as well. This makes it so that the container can be stopped, rebuilt, or restarted and the 6.5GB model can be reused between sessions.
+
+If running on docker, you may add instead a `.env` file with:
+
+```
+TRANSFORMERS_CACHE="/recommender/big_models_data_cache"
+```
+
+You may also add other configurations to work with your gpu and max gpu-memory allocation, such as:
+
+```
+PYTORCH_CUDA_ALLOC_CONF=backend:native,max_split_size_mb:10
+```
