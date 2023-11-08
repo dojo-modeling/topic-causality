@@ -5,14 +5,12 @@ from pydantic import BaseModel
 
 from fastapi import (
     FastAPI
-    # Response,
-    # status
 )
 from fastapi.logger import logger
 from typing import List, Optional
+import torch
 
 from topic_causality.model import recommender_engine
-
 
 app = FastAPI()
 
@@ -38,10 +36,9 @@ class AllResponseSchema(BaseModel):
 def get_healthcheck():
     return {
         "status": "OK",
-        # Set to True for gpu instance,
-        # or load from torch lib from model.py if you're feeling up to it:
-        "gpu": False
+        "gpu": torch.cuda.is_available()
     }
+
 
 @app.post("/causal-recommender/causes", response_model=CausesResponseSchema)
 def get_causality_recommendation_causes(payload: RequestBody):
@@ -84,8 +81,10 @@ def get_causality_recommendation_both(payload: RequestBody):
     }
 
 
-uvicorn.run(
-    app,
-    host="0.0.0.0",
-    port=8084
-)
+# uvicorn.run(
+#     f"{__name__}:app",
+#     host="0.0.0.0",
+#     port=8084,
+#     reload=True,
+#     log_config="logging.yaml"
+# )
