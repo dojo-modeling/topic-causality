@@ -4,14 +4,31 @@ services:
     build: .
     image: recommender:gpu
     ports:
-      - 8084:8084
-    expose:
-      - "8084"
+    - mode: ingress
+      target: 8084
+      published: "8084"
+      protocol: tcp
+    restart: always
     container_name: dojo-recommender
+    command:
+    - poetry
+    - run
+    - uvicorn
+    - topic_causality.api:app
+    - --host
+    - 0.0.0.0
+    - --port
+    - "8084"
+    - --reload
+    - --log-config
+    - logging.yaml
     networks:
       - rec
     volumes:
-      - ./big_models_data_cache:/recommender/big_models_data_cache
+      # - ./big_models_data_cache:/recommender/big_models_data_cache
+      - type: bind
+        source: .
+        target: /recommender
     deploy:
       resources:
         reservations:
